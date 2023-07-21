@@ -5,6 +5,7 @@ import EditProfileValidationSchema from "./validationSchema";
 import GenderSelector from "../../common/gender-selector/GenderSelector";
 import TopNavigation from "../../common/top-navigation/TopNavigation";
 import Footer from "../../common/footer/Footer";
+import ProfileButton from "../../common/profile-button/ProfileButton";
 
 export default function EditProfile() {
   const formik = useFormik({
@@ -27,7 +28,7 @@ export default function EditProfile() {
 
   return (
     <div className="bg-white w-full min-h-screen pb-5">
-      <TopNavigation />
+      <TopNavigation profileButton={<ProfileButton edit={true} />} />
       <div className="m-auto w-1/3">
         <div className="py-9 px-6 rounded-lg mt-3">
           <h1 className="text-2xl font-bold text-center text-black mb-5">
