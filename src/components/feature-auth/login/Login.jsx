@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import VisibilityButton from "../../common/visibility-button/VisibilityButton";
 
 export default function Login() {
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
+
   return (
     <div className="bg-primary w-screen h-screen">
       <div className="m-auto w-1/3 pt-16">
@@ -27,12 +30,15 @@ export default function Login() {
               <label htmlFor="password" className="block font-bold text-gray-700">
                 Password
               </label>
+              <div>
               <input
-                type="password"
+                type={passwordVisibility? "text" : "password"}
                 id="password"
                 name="password"
                 className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full"
               />
+              <VisibilityButton className="text-grayaccent absolute z-50 ml-[-2.2rem] pt-[0.9rem]" visibility={passwordVisibility} setVisibility={setPasswordVisibility} />
+              </div>
             </div>
             <button
               type="submit"
@@ -51,9 +57,9 @@ export default function Login() {
             <p>Version 1.0</p>
           </span>
           <span className="font-bold gap-5 flex">
-            <a>About Us</a>
-            <a>Privacy</a>
-            <a>Terms</a>
+            <a href="#">About Us</a>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
           </span>
         </div>
       </div>
