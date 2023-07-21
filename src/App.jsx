@@ -4,7 +4,7 @@ import Register from "./components/feature-auth/register/Register";
 
 function App() {
   return (
-    <Register />
+    <Login />
   );
 }
 

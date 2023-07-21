@@ -1,8 +1,21 @@
 import React, { useState } from "react";
 import VisibilityButton from "../../common/visibility-button/VisibilityButton";
+import LoginValidationSchema from "./validationSchema";
+import { useFormik } from "formik";
 
 export default function Login() {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: ""
+    },
+    validationSchema: LoginValidationSchema,
+    onSubmit: (values) => {
+      console.log(values);
+    }
+  })
 
   return (
     <div className="bg-primary w-full min-h-screen">
@@ -13,18 +26,24 @@ export default function Login() {
           <h1 className="uppercase text-[1.7rem] font-bold text-center text-primary mb-5">
             ABC Company
           </h1>
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <div className="mb-4">
               <label htmlFor="username" className="block font-bold text-gray-700">
                 User Name
               </label>
               <input
-                type="text"
+                type="email"
                 id="username"
                 name="username"
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full"
                 placeholder="Jone.Doe@gmail.com"
               />
+              { formik.errors.username ? (
+                <span className="text-red-700 text-xs block">{formik.errors.username}</span>
+              ) : null}
             </div>
             <div className="mb-10">
               <label htmlFor="password" className="block font-bold text-gray-700">
@@ -35,10 +54,16 @@ export default function Login() {
                 type={passwordVisibility? "text" : "password"}
                 id="password"
                 name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full pr-10"
               />
               <VisibilityButton className="text-grayaccent absolute z-50 ml-[-2.2rem] pt-[0.9rem]" visibility={passwordVisibility} setVisibility={setPasswordVisibility} />
               </div>
+              { formik.errors.password ? (
+                <span className="text-red-700 text-xs block">{formik.errors.password}</span>
+              ) : null}
             </div>
             <button
               type="submit"
