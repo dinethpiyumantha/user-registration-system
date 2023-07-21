@@ -11,6 +11,7 @@ export default {
         secondary: '#ff9900',
         accent: '#ff9900',
         grayaccent: '#7c7979',
+        lightgray: '#d9d9d9',
       },
     },
   },
