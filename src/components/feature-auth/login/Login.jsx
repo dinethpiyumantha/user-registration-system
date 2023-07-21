@@ -5,7 +5,7 @@ export default function Login() {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   return (
-    <div className="bg-primary w-screen h-screen">
+    <div className="bg-primary w-full min-h-screen">
       <div className="m-auto w-1/3 pt-16">
         <h1 className="text-white text-[1.7rem] font-semibold px-2">Welcome Back</h1>
         <p className="text-white px-2">Login to your account</p>
@@ -35,7 +35,7 @@ export default function Login() {
                 type={passwordVisibility? "text" : "password"}
                 id="password"
                 name="password"
-                className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full"
+                className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full pr-10"
               />
               <VisibilityButton className="text-grayaccent absolute z-50 ml-[-2.2rem] pt-[0.9rem]" visibility={passwordVisibility} setVisibility={setPasswordVisibility} />
               </div>
