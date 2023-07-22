@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import VisibilityButton from "../../common/visibility-button/VisibilityButton";
 import LoginValidationSchema from "./validationSchema";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import { login } from "../../../ducks/feature-auth/actions";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -12,8 +18,9 @@ export default function Login() {
       password: ""
     },
     validationSchema: LoginValidationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      await dispatch(login(values))
+      navigate("/")
     }
   })
 
