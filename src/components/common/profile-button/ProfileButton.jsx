@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import DefaultImage from "../../../assets/default_profile_icon.png"
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../ducks/feature-auth/actions';
 
-const ProfileButton = ({ image, edit }) => {
+const ProfileButton = ({ image=DefaultImage, edit }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -19,7 +23,7 @@ const ProfileButton = ({ image, edit }) => {
         onClick={handleDropdownToggle}
       >
         <img
-          src={image ? image : DefaultImage}
+          src={image}
           alt="Profile Icon"
           className="w-8 h-8 rounded-full"
         />
@@ -30,7 +34,7 @@ const ProfileButton = ({ image, edit }) => {
             Edit Profile
           </button>
           <hr className="border-[.1rem] border-grayaccent mb-1" />
-          <button onClick={() => {}} className="block w-full px-4 py-2 text-left text-gray-800 rounded-lg font-semibold hover:bg-gray-100">
+          <button onClick={() => dispatch(logout())} className="block w-full px-4 py-2 text-left text-gray-800 rounded-lg font-semibold hover:bg-gray-100">
             Sign Out
           </button>
         </div>

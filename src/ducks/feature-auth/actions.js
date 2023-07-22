@@ -11,6 +11,15 @@ export const login = createAsyncThunk('auth/login', async (credentials) => {
   }
 });
 
+export const logout = createAsyncThunk('auth/logout', async () => {
+  try {
+    return null;
+  } catch (error) {
+    throw new Error('Login failed. Please check your credentials.');
+  }
+});
+
+
 export const accessUser = createAsyncThunk('auth/authorize', async (token) => {
   try {
     const response = await authService.authorize(token);

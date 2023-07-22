@@ -2,21 +2,31 @@ import React, { useState } from "react";
 import ChevronIcon from "../../common/icons/ChevronIcon";
 import { useFormik } from "formik";
 import RegistrationValidationSchema from "./validationSchema";
+import { useNavigate } from "react-router-dom";
+import registrationService from "../../../lib/api/feature-auth/registrationService";
 
 export default function Register() {
+
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       first_name: "",
       last_name: "",
       email: "",
-      county_code: "",
+      county_code: "+94",
       local_number: "",
       password: "",
       confirm_password: "",
     },
     validationSchema: RegistrationValidationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        await registrationService.register(values)
+        navigate("/success")
+      } catch (err) {
+        navigate("/register")
+      }
     },
   });
 
@@ -26,7 +36,7 @@ export default function Register() {
     <div className="bg-primary w-full min-h-screen py-5">
       <div className="m-auto w-1/3">
         <div className="text-white flex gap-2">
-          <ChevronIcon />
+          <ChevronIcon onClick={() => navigate(-1)} />
           <h1 className="text-[1.7rem] font-semibold px-2">Create Account</h1>
         </div>
         <div className="py-9 px-6 rounded-lg mt-3 bg-white shadow-lg">
@@ -98,15 +108,17 @@ export default function Register() {
                   id="county_code"
                   name="county_code"
                   maxLength={4}
+                  disabled
                   value={formik.values.county_code}
                   onChange={formik.handleChange}
                   className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-1/4"
                   placeholder="+94"
                 />
                 <input
-                  type="tel"
+                  type="text"
                   id="local_number"
                   maxLength={9}
+                  minLength={9}
                   name="local_number"
                   value={formik.values.local_number}
                   onChange={formik.handleChange}

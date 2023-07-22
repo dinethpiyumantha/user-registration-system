@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChevronIcon from "../../common/icons/ChevronIcon";
 import { useFormik } from "formik";
 import EditProfileValidationSchema from "./validationSchema";
@@ -6,29 +6,45 @@ import GenderSelector from "../../common/gender-selector/GenderSelector";
 import TopNavigation from "../../common/top-navigation/TopNavigation";
 import Footer from "../../common/footer/Footer";
 import ProfileButton from "../../common/profile-button/ProfileButton";
+import { useSelector } from "react-redux";
+import userService from "../../../lib/api/feature-profile/userService";
+import { useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
+
+  const token = useSelector(state => state.auth.auth.token);
+  const [user, setUser] = useState();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const details = await userService.getUser(token);
+      setUser(details.result)
+    })();
+  }, [])
+
   const formik = useFormik({
     initialValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      county_code: "",
-      local_number: "",
-      password: "",
-      confirm_password: "",
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      email: user?.email,
+      dob: user?.dob,
+      gender: user?.gender,
     },
     validationSchema: EditProfileValidationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      await userService.update(values, token);
+      navigate("/");
     },
+    enableReinitialize: true,
   });
 
   console.log(formik.errors);
 
   return (
     <div className="bg-white w-full min-h-screen pb-5">
-      <TopNavigation profileButton={<ProfileButton edit={true} />} />
+      <TopNavigation username={`${user?.full_name}`} profileButton={<ProfileButton edit={true} image={user?.profile_image?.thumb} />} />
       <div className="m-auto w-1/3">
         <div className="py-9 px-6 rounded-lg mt-3">
           <h1 className="text-2xl font-bold text-center text-black mb-5">
@@ -81,6 +97,7 @@ export default function EditProfile() {
                 type="email"
                 id="email"
                 name="email"
+                disabled
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full"
@@ -94,10 +111,10 @@ export default function EditProfile() {
                 Date of Birth
               </label>
               <input
-                type="email"
-                id="email"
-                name="email"
-                value={formik.values.email}
+                type="date"
+                id="dob"
+                name="dob"
+                value={formik.values.dob}
                 onChange={formik.handleChange}
                 className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full"
               />
@@ -109,7 +126,7 @@ export default function EditProfile() {
               <label htmlFor="password" className="block font-bold text-black">
                 Gender
               </label>
-              <GenderSelector />
+              <GenderSelector selected={user?.gender} />
             </div>
             <button
               type="submit"

@@ -13,7 +13,6 @@ const PrivateRoute = ({ auth: { isAuthenticated }, children }) => {
 function App() {
 
   const token = useSelector(state => state.auth.auth.token);
-  console.log(token);
 
   const isAuthenticated = () => {
     return (token) ? true: false;

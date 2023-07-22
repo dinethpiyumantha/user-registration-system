@@ -30,18 +30,10 @@ const authService = {
         },
       });
 
-      console.log(response);
       return response.data;
     } catch (error) {
       throw new Error('Login failed. Please check your credentials.');
     }
-    // const response = {
-    //   token_type: 'Bearer',
-    //   expires_in: 1296000,
-    //   access_token: 'your_access_token',
-    //   refresh_token: 'your_refresh_token',
-    // };
-    // return response;
   },
   authorize: async (token) => {
     try {

@@ -3,7 +3,7 @@ import DefaultImage from "../../../assets/default_profile_icon.png"
 import PlusCircleIcon from '../../common/icons/PlusCircleIcon';
 
 
-const ProfileImageUpload = () => {
+const ProfileImageUpload = ({image=DefaultImage}) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -20,7 +20,7 @@ const ProfileImageUpload = () => {
   return (
     <div className="relative">
       <img
-        src={selectedImage || DefaultImage}
+        src={selectedImage || image}
         alt="Uploaded"
         className="w-full h-full object-cover rounded-full"
       />

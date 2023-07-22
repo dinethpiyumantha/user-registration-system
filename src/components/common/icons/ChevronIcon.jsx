@@ -1,12 +1,13 @@
 import React from "react";
 
-export default function ChevronIcon() {
+export default function ChevronIcon({onClick=()=>{}}) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 800 900"
-      className="w-6 h-6 self-center"
+      className="w-6 h-6 self-center cursor-pointer"
       fill="currentColor"
+      onClick={() => onClick()}
     >
       <rect
         width="1080"

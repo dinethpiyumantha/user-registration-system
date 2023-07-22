@@ -81,7 +81,7 @@ export default function Login() {
           </form>
           <p className="font-bold mt-4">
             Still Have No account ?{" "}
-            <span className="text-accent cursor-pointer hover:text-amber-600">SIGNUP</span> Now
+            <span onClick={() => navigate("/register")} className="text-accent cursor-pointer hover:text-amber-600">SIGNUP</span> Now
           </p>
         </div>
         <div className="text-white text-xs px-2 flex justify-between mt-2 ">
