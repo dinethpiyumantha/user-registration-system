@@ -23,10 +23,10 @@ function App() {
       {/* Public routes */}
       <Route exact path="/auth" Component={Login} />
       <Route exact path="/register" Component={Register} />
+      <Route exact path="/success" Component={Success} />
 
       {/* Private routes */}
       <Route exact path="/" element={<PrivateRoute auth={{ isAuthenticated: isAuthenticated() }}><ViewProfile /></PrivateRoute>} />
-      <Route exact path="/success" element={<PrivateRoute auth={{ isAuthenticated: isAuthenticated() }}><Success /></PrivateRoute>} />
       <Route exact path="/profile-edit" element={<PrivateRoute auth={{ isAuthenticated: isAuthenticated() }}><EditProfile /></PrivateRoute>} />
     </Routes>
   );

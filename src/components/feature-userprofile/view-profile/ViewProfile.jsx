@@ -46,7 +46,7 @@ export default function ViewProfile() {
           </div>
           <div className="inline-flex relative w-full gap-4 mb-4">
             <p className="text-black w-full font-semibold text-lg">Gender</p>
-            <p className="text-grayaccent w-full font-semibold text-lg text-right">{user?.gender}</p>
+            <p className="text-grayaccent w-full font-semibold text-lg text-right capitalize">{user?.gender}</p>
           </div>
           <div className="inline-flex relative w-full gap-4 mb-4">
             <p className="text-black w-full font-semibold text-lg">Date of Birth</p>

@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const genders = ['male', 'female', 'other']; // The options for gender selection
 
-const GenderSelector = ({selected=""}) => {
+const GenderSelector = ({onChange=(e)=>{}, selected=""}) => {
   const [selectedGender, setSelectedGender] = useState(selected);
 
   const handleGenderChange = (gender) => {
     setSelectedGender(gender);
   };
+
+  useEffect(()=> {
+    if(selectedGender)
+      onChange({value: selectedGender});
+  }, [selectedGender])
 
   return (
     <div className="inline-flex relative w-full gap-4">

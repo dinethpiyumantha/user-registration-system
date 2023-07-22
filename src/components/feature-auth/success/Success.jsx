@@ -1,7 +1,11 @@
 import React from "react";
 import CheckIcon from "../../common/icons/CheckIcon";
+import { useNavigate } from "react-router-dom";
 
 export default function Success() {
+
+  const navigate = useNavigate();
+
   return (
     <div className="bg-primary w-full min-h-screen">
       <div className="m-auto w-1/3 pt-24">
@@ -15,6 +19,7 @@ export default function Success() {
           <p className="text-center text-black font-semibold mb-4">Your Account has been created Successfully</p>
           <button
             type="submit"
+            onClick={() => navigate("/auth")}
             className="w-full p-2 bg-primary hover:bg-slate-900 text-white font-bold rounded-[.3rem]"
           >
             Go to Login

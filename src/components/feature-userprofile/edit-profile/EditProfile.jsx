@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ChevronIcon from "../../common/icons/ChevronIcon";
-import { useFormik } from "formik";
+import { Field, useFormik } from "formik";
 import EditProfileValidationSchema from "./validationSchema";
 import GenderSelector from "../../common/gender-selector/GenderSelector";
 import TopNavigation from "../../common/top-navigation/TopNavigation";
@@ -11,18 +11,26 @@ import userService from "../../../lib/api/feature-profile/userService";
 import { useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
-
-  const token = useSelector(state => state.auth.auth.token);
-  const [user, setUser] = useState();
+  const token = useSelector((state) => state.auth.auth.token);
+  const [user, setUser] = useState({});
+  const [gender, setGender] = useState({});
 
   const navigate = useNavigate();
+
+  const genderChangeHander = (e) => {
+    setGender(e.value)
+  }
 
   useEffect(() => {
     (async () => {
       const details = await userService.getUser(token);
-      setUser(details.result)
+      setUser(details.result);
     })();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    setGender(user.gender)
+  }, [user])
 
   const formik = useFormik({
     initialValues: {
@@ -34,22 +42,23 @@ export default function EditProfile() {
     },
     validationSchema: EditProfileValidationSchema,
     onSubmit: async (values) => {
+      values.gender=gender
+      console.log(values);
       await userService.update(values, token);
       navigate("/");
     },
     enableReinitialize: true,
   });
 
-  console.log(formik.errors);
-
   return (
     <div className="bg-white w-full min-h-screen pb-5">
-      <TopNavigation username={`${user?.full_name}`} profileButton={<ProfileButton edit={true} image={user?.profile_image?.thumb} />} />
+      <TopNavigation
+        username={`${user?.full_name}`}
+        profileButton={<ProfileButton edit={true} image={user?.profile_image?.thumb} />}
+      />
       <div className="m-auto w-1/3">
         <div className="py-9 px-6 rounded-lg mt-3">
-          <h1 className="text-2xl font-bold text-center text-black mb-5">
-            Edit Profile
-          </h1>
+          <h1 className="text-2xl font-bold text-center text-black mb-5">Edit Profile</h1>
           <form onSubmit={formik.handleSubmit} className="block">
             <div className="mb-4">
               <div className="inline-flex gap-4">
@@ -126,7 +135,7 @@ export default function EditProfile() {
               <label htmlFor="password" className="block font-bold text-black">
                 Gender
               </label>
-              <GenderSelector selected={user?.gender} />
+              <GenderSelector onChange={genderChangeHander} selected={user?.gender} />
             </div>
             <button
               type="submit"

@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import DefaultImage from "../../../assets/default_profile_icon.png"
 import PlusCircleIcon from '../../common/icons/PlusCircleIcon';
+import userService from '../../../lib/api/feature-profile/userService';
+import { useSelector } from 'react-redux';
 
 
 const ProfileImageUpload = ({image=DefaultImage}) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const token = useSelector(state => state.auth.auth.token);
+
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+      
+      userService.changeProfilePicture(file, token);
+
+      // const reader = new FileReader();
+      // reader.onloadend = () => {
+      //   setSelectedImage(reader.result);
+      // };
+      // reader.readAsDataURL(file);
     }
   };
 

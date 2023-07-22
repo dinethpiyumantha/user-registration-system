@@ -38,17 +38,17 @@ const userService = {
   },
   changeProfilePicture: async (image, token) => {
     try {
-      const userModified = new FormData();
+      const data = new FormData();
 
-      userModified.append('profile_image', image);
+      data.append('profile_image', image);
 
-      const response = await axios.post(`https://mditest.elifeamerica.com/api/v1/register`, userModified, {
+      const response = await axios.post(`https://mditest.elifeamerica.com/api/v1/profile/avatar`, data, {
         headers: {
+          'Accept': 'application/json',
           'Content-Type': 'multipart/form-data', 
           'Authorization': `Bearer ${token}`,
         },
       });
-      console.log(response);
       return response.data;
     } catch (error) {
       throw new Error("Login failed. Please check your credentials.");
