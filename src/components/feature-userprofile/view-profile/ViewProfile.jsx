@@ -18,6 +18,11 @@ export default function ViewProfile() {
     })();
   }, [])
 
+  useEffect(() => {
+    document.title = "My Profile - MDI"
+    return () => { document.title = "MDI" }
+  },[])
+
   return (
     <div className="bg-white w-full min-h-screen pb-5">
       <TopNavigation username={`${user?.full_name}`} profileButton={<ProfileButton image={user?.profile_image?.thumb} />}  />

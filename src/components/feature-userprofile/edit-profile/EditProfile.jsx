@@ -50,6 +50,11 @@ export default function EditProfile() {
     enableReinitialize: true,
   });
 
+  useEffect(() => {
+    document.title = "Edit Profile - MDI"
+    return () => { document.title = "MDI" }
+  },[])
+
   return (
     <div className="bg-white w-full min-h-screen pb-5">
       <TopNavigation
@@ -135,7 +140,7 @@ export default function EditProfile() {
               <label htmlFor="password" className="block font-bold text-black">
                 Gender
               </label>
-              <GenderSelector onChange={genderChangeHander} selected={user?.gender} />
+              <GenderSelector onChange={genderChangeHander} selected={gender} />
             </div>
             <button
               type="submit"

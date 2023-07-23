@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChevronIcon from "../../common/icons/ChevronIcon";
 import { useFormik } from "formik";
 import RegistrationValidationSchema from "./validationSchema";
@@ -30,7 +30,12 @@ export default function Register() {
     },
   });
 
-  console.log(formik.errors);
+
+  useEffect(() => {
+    document.title = "Register - MDI"
+    return () => { document.title = "MDI" }
+  },[])
+
 
   return (
     <div className="bg-primary w-full min-h-screen py-5">

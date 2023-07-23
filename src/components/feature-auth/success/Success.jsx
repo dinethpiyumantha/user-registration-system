@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import CheckIcon from "../../common/icons/CheckIcon";
 import { useNavigate } from "react-router-dom";
 
 export default function Success() {
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Successfull - MDI"
+    return () => { document.title = "MDI" }
+  },[])
 
   return (
     <div className="bg-primary w-full min-h-screen">

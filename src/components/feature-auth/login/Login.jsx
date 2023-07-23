@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VisibilityButton from "../../common/visibility-button/VisibilityButton";
 import LoginValidationSchema from "./validationSchema";
 import { useFormik } from "formik";
@@ -23,6 +23,11 @@ export default function Login() {
       navigate("/")
     }
   })
+
+  useEffect(() => {
+    document.title = "Register - MDI"
+    return () => { document.title = "MDI" }
+  },[])
 
   return (
     <div className="bg-primary w-full min-h-screen">
