@@ -18,12 +18,14 @@ const GenderSelector = ({ onChange = (e) => {}, selected = "" }) => {
 
   // set initial gender
   useEffect(() => {
-    if (!(selected === selectedGender)) setSelectedGender(selected);
+    setSelectedGender(selected);
   }, [selected]);
 
   // handle callback when changing gender
   useEffect(() => {
-    onChange({ value: selectedGender });
+    if (!(selected == selectedGender)) {
+      onChange({ value: selectedGender });
+    }
   }, [selectedGender, onChange]);
 
   return (
