@@ -12,6 +12,23 @@ const GrantType = "password";
  */
 const registrationService = {
   /**
+   * Check the email exist already
+   * @param {string} email 
+   */
+  checkAvailability: function (email) {
+    return new Promise((resolve, reject) => {
+        axios.get(`https://mditest.elifeamerica.com/api/v1/email/check/${value}`)
+            .then((res) => {
+                resolve(!res.data.result.exist)
+            })
+            .catch((error) => {
+                if (error.response.data.content === "The email has already been taken.") {
+                    resolve(false);
+                }
+            })
+    })
+  },
+  /**
    * Register a user
    * @param {Object} user - user object from form (6 fileds sholud be required)
    * @returns
@@ -38,7 +55,6 @@ const registrationService = {
           },
         }
       );
-      console.log(response);
       return response.data;
     } catch (error) {
       throw new Error("Login failed. Please check your credentials.");

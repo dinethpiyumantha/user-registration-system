@@ -1,4 +1,21 @@
 import * as Yup from "yup";
+import registrationService from "../../../lib/api/feature-auth/registrationService";
+import axios from "axios";
+
+// check availablity of a email
+const checkEmailAvalability = function (value) {
+  return new Promise((resolve, reject) => {
+      axios.get(`https://mditest.elifeamerica.com/api/v1/email/check/${value}`)
+          .then((res) => {
+              resolve(!res.data.result.exist)
+          })
+          .catch((error) => {
+              if (error.response.data.content === "The email has already been taken.") {
+                  resolve(false);
+              }
+          })
+  })
+}
 
 /**
  * Registration form validation schema
@@ -10,7 +27,10 @@ export default Yup.object({
   last_name: Yup.string()
     .max(15, "Second Name must be 15 characters or less")
     .required("Second Name is Required"),
-  email: Yup.string().email("Must be a valid email address.").required("Required"),
+  email: Yup.string()
+    .email("Must be a valid email address.")
+    .required("Required")
+    .test("email-availability", "Email is already in use.", checkEmailAvalability(value)),
   county_code: Yup.string()
     .matches(/^\+[0-9]{1,9}$/, "Country code must be numbers with '+'")
     .min(2, "Country code must be 2 characters or greater")

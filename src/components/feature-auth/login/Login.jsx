@@ -32,7 +32,7 @@ export default function Login() {
 
   // change title
   useEffect(() => {
-    document.title = "Register - MDI";
+    document.title = "Login - MDI";
     return () => {
       document.title = "MDI";
     };
