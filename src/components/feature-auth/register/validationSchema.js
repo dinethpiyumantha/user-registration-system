@@ -30,7 +30,7 @@ export default Yup.object({
   email: Yup.string()
     .email("Must be a valid email address.")
     .required("Required")
-    .test("email-availability", "Email is already in use.", checkEmailAvalability(value)),
+    .test("email-availability", "Email is already in use.", checkEmailAvalability),
   county_code: Yup.string()
     .matches(/^\+[0-9]{1,9}$/, "Country code must be numbers with '+'")
     .min(2, "Country code must be 2 characters or greater")

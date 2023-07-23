@@ -60,6 +60,8 @@ export default function EditProfile() {
     enableReinitialize: true,
   });
 
+
+
   // change document title
   useEffect(() => {
     document.title = "Edit Profile - MDI";
@@ -153,7 +155,7 @@ export default function EditProfile() {
               <label htmlFor="password" className="block font-bold text-black">
                 Gender
               </label>
-              <GenderSelector onChange={genderChangeHander} selected={gender} />
+              <GenderSelector onChange={genderChangeHander} selected={user.gender} />
             </div>
             <button
               type="submit"

@@ -10,6 +10,7 @@ const genders = ["male", "female", "other"]; // The options for gender selection
  */
 const GenderSelector = ({ onChange = (e) => {}, selected = "" }) => {
   const [selectedGender, setSelectedGender] = useState(null);
+  const [loop, setLoop] = useState(true)
 
   // handle gender changes
   const handleGenderChange = (gender) => {
@@ -23,10 +24,8 @@ const GenderSelector = ({ onChange = (e) => {}, selected = "" }) => {
 
   // handle callback when changing gender
   useEffect(() => {
-    if (!(selected == selectedGender)) {
-      onChange({ value: selectedGender });
-    }
-  }, [selectedGender, onChange]);
+    onChange({ value: selectedGender }); 
+  }, [selectedGender]);
 
   return (
     <div className="inline-flex relative w-full gap-4">

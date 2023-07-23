@@ -6,7 +6,7 @@ import React from "react";
  */
 export default function Footer() {
   return (
-    <div className="text-grayaccent text-xs px-52 w-full absolute bottom-0 py-5 flex justify-between mt-2">
+    <div data-testid="footer" className="text-grayaccent text-xs px-52 w-full absolute bottom-0 py-5 flex justify-between mt-2">
       <span>
         <p>Version 1.0</p>
       </span>
