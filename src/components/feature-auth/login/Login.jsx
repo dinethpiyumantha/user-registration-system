@@ -6,28 +6,37 @@ import { useDispatch } from "react-redux";
 import { login } from "../../../ducks/feature-auth/actions";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Login screen component
+ * @returns
+ */
 export default function Login() {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // config form with formik
   const formik = useFormik({
     initialValues: {
       username: "",
-      password: ""
+      password: "",
     },
     validationSchema: LoginValidationSchema,
     onSubmit: async (values) => {
-      await dispatch(login(values))
-      navigate("/")
-    }
-  })
+      // dispatch login action and after navigate to profile view
+      await dispatch(login(values));
+      navigate("/");
+    },
+  });
 
+  // change title
   useEffect(() => {
-    document.title = "Register - MDI"
-    return () => { document.title = "MDI" }
-  },[])
+    document.title = "Register - MDI";
+    return () => {
+      document.title = "MDI";
+    };
+  }, []);
 
   return (
     <div className="bg-primary w-full min-h-screen">
@@ -53,7 +62,7 @@ export default function Login() {
                 className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full"
                 placeholder="Jone.Doe@gmail.com"
               />
-              { formik.errors.username ? (
+              {formik.errors.username ? (
                 <span className="text-red-700 text-xs block">{formik.errors.username}</span>
               ) : null}
             </div>
@@ -62,18 +71,22 @@ export default function Login() {
                 Password
               </label>
               <div>
-              <input
-                type={passwordVisibility? "text" : "password"}
-                id="password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full pr-10"
-              />
-              <VisibilityButton className="text-grayaccent absolute z-50 ml-[-2.2rem] pt-[0.9rem]" visibility={passwordVisibility} setVisibility={setPasswordVisibility} />
+                <input
+                  type={passwordVisibility ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="mt-1 p-2 border-2 rounded-[.3rem] border-grayaccent w-full pr-10"
+                />
+                <VisibilityButton
+                  className="text-grayaccent absolute z-50 ml-[-2.2rem] pt-[0.9rem]"
+                  visibility={passwordVisibility}
+                  setVisibility={setPasswordVisibility}
+                />
               </div>
-              { formik.errors.password ? (
+              {formik.errors.password ? (
                 <span className="text-red-700 text-xs block">{formik.errors.password}</span>
               ) : null}
             </div>
@@ -86,7 +99,13 @@ export default function Login() {
           </form>
           <p className="font-bold mt-4">
             Still Have No account ?{" "}
-            <span onClick={() => navigate("/register")} className="text-accent cursor-pointer hover:text-amber-600">SIGNUP</span> Now
+            <span
+              onClick={() => navigate("/register")}
+              className="text-accent cursor-pointer hover:text-amber-600"
+            >
+              SIGNUP
+            </span>{" "}
+            Now
           </p>
         </div>
         <div className="text-white text-xs px-2 flex justify-between mt-2 ">

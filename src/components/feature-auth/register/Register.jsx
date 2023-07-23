@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ChevronIcon from "../../common/icons/ChevronIcon";
 import { useFormik } from "formik";
 import RegistrationValidationSchema from "./validationSchema";
 import { useNavigate } from "react-router-dom";
 import registrationService from "../../../lib/api/feature-auth/registrationService";
 
+/**
+ * User Registration Screen
+ * @returns
+ */
 export default function Register() {
-
   const navigate = useNavigate();
 
+  // config form with formik
   const formik = useFormik({
     initialValues: {
       first_name: "",
@@ -22,20 +26,23 @@ export default function Register() {
     validationSchema: RegistrationValidationSchema,
     onSubmit: async (values) => {
       try {
-        await registrationService.register(values)
-        navigate("/success")
+        // if successful registration
+        await registrationService.register(values);
+        navigate("/success");
       } catch (err) {
-        navigate("/register")
+        // if throw error when registration
+        navigate("/register");
       }
     },
   });
 
-
+  // change document title
   useEffect(() => {
-    document.title = "Register - MDI"
-    return () => { document.title = "MDI" }
-  },[])
-
+    document.title = "Register - MDI";
+    return () => {
+      document.title = "MDI";
+    };
+  }, []);
 
   return (
     <div className="bg-primary w-full min-h-screen py-5">

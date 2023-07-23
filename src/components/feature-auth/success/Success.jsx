@@ -2,14 +2,20 @@ import React, { useEffect } from "react";
 import CheckIcon from "../../common/icons/CheckIcon";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Sccess screen for successfull registration
+ * @returns
+ */
 export default function Success() {
-
   const navigate = useNavigate();
 
+  // change document title
   useEffect(() => {
-    document.title = "Successfull - MDI"
-    return () => { document.title = "MDI" }
-  },[])
+    document.title = "Successfull - MDI";
+    return () => {
+      document.title = "MDI";
+    };
+  }, []);
 
   return (
     <div className="bg-primary w-full min-h-screen">
@@ -18,10 +24,10 @@ export default function Success() {
           <div className="text-green-500 flex justify-center">
             <CheckIcon />
           </div>
-          <h1 className="text-xl font-extrabold text-center text-black mb-2">
-            Congratulations
-          </h1>
-          <p className="text-center text-black font-semibold mb-4">Your Account has been created Successfully</p>
+          <h1 className="text-xl font-extrabold text-center text-black mb-2">Congratulations</h1>
+          <p className="text-center text-black font-semibold mb-4">
+            Your Account has been created Successfully
+          </p>
           <button
             type="submit"
             onClick={() => navigate("/auth")}

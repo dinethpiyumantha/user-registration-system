@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ChevronIcon from "../../common/icons/ChevronIcon";
-import { Field, useFormik } from "formik";
+import { useFormik } from "formik";
 import EditProfileValidationSchema from "./validationSchema";
 import GenderSelector from "../../common/gender-selector/GenderSelector";
 import TopNavigation from "../../common/top-navigation/TopNavigation";
@@ -10,17 +9,25 @@ import { useSelector } from "react-redux";
 import userService from "../../../lib/api/feature-profile/userService";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Edit user profile screen
+ * @returns
+ */
 export default function EditProfile() {
+  // access token from a global state - redux
   const token = useSelector((state) => state.auth.auth.token);
+
   const [user, setUser] = useState({});
   const [gender, setGender] = useState({});
 
   const navigate = useNavigate();
 
+  // handle gender state changes
   const genderChangeHander = (e) => {
-    setGender(e.value)
-  }
+    setGender(e.value);
+  };
 
+  // set user calling api endpoint
   useEffect(() => {
     (async () => {
       const details = await userService.getUser(token);
@@ -28,10 +35,12 @@ export default function EditProfile() {
     })();
   }, []);
 
+  // set dependent gender state from user state
   useEffect(() => {
-    setGender(user.gender)
-  }, [user])
+    setGender(user.gender);
+  }, [user]);
 
+  // config form with formik
   const formik = useFormik({
     initialValues: {
       first_name: user?.first_name,
@@ -42,18 +51,22 @@ export default function EditProfile() {
     },
     validationSchema: EditProfileValidationSchema,
     onSubmit: async (values) => {
-      values.gender=gender
-      console.log(values);
+      values.gender = gender;
+
+      // submit changes and navigate to profile view
       await userService.update(values, token);
       navigate("/");
     },
     enableReinitialize: true,
   });
 
+  // change document title
   useEffect(() => {
-    document.title = "Edit Profile - MDI"
-    return () => { document.title = "MDI" }
-  },[])
+    document.title = "Edit Profile - MDI";
+    return () => {
+      document.title = "MDI";
+    };
+  }, []);
 
   return (
     <div className="bg-white w-full min-h-screen pb-5">

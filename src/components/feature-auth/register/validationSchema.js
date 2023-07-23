@@ -1,8 +1,15 @@
 import * as Yup from "yup";
 
+/**
+ * Registration form validation schema
+ */
 export default Yup.object({
-  first_name: Yup.string().max(15, "First Name must be 15 characters or less").required("First Name is Required"),
-  last_name: Yup.string().max(15, "Second Name must be 15 characters or less").required("Second Name is Required"),
+  first_name: Yup.string()
+    .max(15, "First Name must be 15 characters or less")
+    .required("First Name is Required"),
+  last_name: Yup.string()
+    .max(15, "Second Name must be 15 characters or less")
+    .required("Second Name is Required"),
   email: Yup.string().email("Must be a valid email address.").required("Required"),
   county_code: Yup.string()
     .matches(/^\+[0-9]{1,9}$/, "Country code must be numbers with '+'")
@@ -21,6 +28,6 @@ export default Yup.object({
     .matches(/[^a-zA-Z0-9]/, "Password may contain at least one special character")
     .required("Password is Required."),
   confirm_password: Yup.string()
-    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Please confirm your password"),
 });
