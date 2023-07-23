@@ -1,4 +1,5 @@
 /* colors.css */
+/* these colors are already configured in tailwind.config.js */
 :root {
   --primary-color: #205387;
   --secondary-color: #d9d9d9;
