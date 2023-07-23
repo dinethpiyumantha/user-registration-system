@@ -1,35 +1,62 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Login from "./components/feature-auth/login/Login";
+import Register from "./components/feature-auth/register/Register";
+import EditProfile from "./components/feature-userprofile/edit-profile/EditProfile";
+import ViewProfile from "./components/feature-userprofile/view-profile/ViewProfile";
+import Success from "./components/feature-auth/success/Success";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { useSelector } from "react-redux";
 
+/**
+ * Privet route component
+ * @param {boolean} auth.isAuthenticated - if true only access this child component
+ * @param {Element} children - child component
+ * @returns
+ */
+const PrivateRoute = ({ auth: { isAuthenticated }, children }) => {
+  return isAuthenticated ? children : <Navigate to="/auth" />;
+};
+
+/**
+ * App component
+ * @returns
+ */
 function App() {
-  const [count, setCount] = useState(0)
+  // access token
+  const token = useSelector((state) => state.auth.auth.token);
+
+  // check authenticated or not
+  const isAuthenticated = () => {
+    return token ? true : false;
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Routes>
+      {/* Public routes */}
+      <Route exact path="/auth" Component={Login} />
+      <Route exact path="/register" Component={Register} />
+      <Route exact path="/success" Component={Success} />
+
+      {/* Private routes */}
+      <Route
+        exact
+        path="/"
+        element={
+          <PrivateRoute auth={{ isAuthenticated: isAuthenticated() }}>
+            <ViewProfile />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        exact
+        path="/profile-edit"
+        element={
+          <PrivateRoute auth={{ isAuthenticated: isAuthenticated() }}>
+            <EditProfile />
+          </PrivateRoute>
+        }
+      />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
